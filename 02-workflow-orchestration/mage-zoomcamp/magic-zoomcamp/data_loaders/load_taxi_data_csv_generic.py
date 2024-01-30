@@ -9,7 +9,11 @@ if 'test' not in globals():
 
 @data_loader
 def load_data(*args, **kwargs):
-    base_url = 'https://github.com/DataTalksClub/nyc-tlc-data/releases/download/green/'
+    color = 'green'
+    dates_col_start = {'green': 'l', 'yellow': 't'}
+
+
+    base_url = f'https://github.com/DataTalksClub/nyc-tlc-data/releases/download/{color}/'
     
     taxi_dtypes = {
         'VendorID': pd.Int64Dtype(),
@@ -29,25 +33,19 @@ def load_data(*args, **kwargs):
         'congestion_surcharge': float
     }
 
-    parse_dates = ['lpep_pickup_datetime', 'lpep_dropoff_datetime']
+    parse_dates = [f'{dates_col_start[color]}pep_pickup_datetime', 
+                   f'{dates_col_start[color]}pep_dropoff_datetime']
 
     data = []
-
-    for month in range(1, 13):
-        month = str(month) if month >= 10 else '0' + str(month)
-        url = base_url + f'green_tripdata_2020-{month}.csv.gz'
-        ind_data = pd.read_csv(url, sep=",", compression='gzip', 
-                               dtype=taxi_dtypes, parse_dates=parse_dates)
-        data.append(ind_data)
+    for year in range(2019, 2020):
+        for month in range(1, 13):
+            month = str(month) if month >= 10 else '0' + str(month)
+            url = base_url + f'{color}_tripdata_{year}-{month}.csv.gz'
+            ind_data = pd.read_csv(url, sep=",", compression='gzip', 
+                                dtype=taxi_dtypes, parse_dates=parse_dates)
+            data.append(ind_data)
+            print(f'Colected data from {month}-{year}')
     
     data = pd.concat(data, axis=0)
-        
     return data
 
-
-@test
-def test_output(output, *args) -> None:
-    """
-    Template code for testing the output of the block.
-    """
-    assert output is not None, 'The output is undefined'

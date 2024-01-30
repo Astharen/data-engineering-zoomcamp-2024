@@ -16,7 +16,7 @@ def export_data_to_big_query(df: DataFrame, **kwargs) -> None:
 
     Docs: https://docs.mage.ai/design/data-loading#bigquery
     """
-    table_id = 'your-project.ny_taxi.yellow_cab_data'
+    table_id = 'terraform-412019.ny_taxi_data.green_cab_data'
     config_path = path.join(get_repo_path(), 'io_config.yaml')
     config_profile = 'default'
 
