@@ -1,71 +1,50 @@
 blocks:
 - all_upstream_blocks_executed: true
   color: null
-  configuration:
-    file_source:
-      path: data_loaders/load_green_taxi.py
+  configuration: {}
   downstream_blocks:
-  - clean_no_passenger_or_no_trip
+  - taxi_to_gcs_parquet
   executor_config: null
   executor_type: local_python
   has_callback: false
   language: python
-  name: load_green_taxi
+  name: load_green_taxi_parquet
   retry_config: null
   status: executed
   timeout: null
   type: data_loader
   upstream_blocks: []
-  uuid: load_green_taxi
+  uuid: load_green_taxi_parquet
 - all_upstream_blocks_executed: true
   color: null
   configuration:
     file_source:
-      path: transformers/clean_no_passenger_or_no_trip.py
-  downstream_blocks:
-  - taxi_to_gcs_partition_parquet
-  executor_config: null
-  executor_type: local_python
-  has_callback: false
-  language: python
-  name: clean_no_passenger_or_no_trip
-  retry_config: null
-  status: updated
-  timeout: null
-  type: transformer
-  upstream_blocks:
-  - load_green_taxi
-  uuid: clean_no_passenger_or_no_trip
-- all_upstream_blocks_executed: false
-  color: null
-  configuration:
-    file_source:
-      path: data_exporters/taxi_to_gcs_partition_parquet.py
+      path: data_exporters/taxi_to_gcs_parquet.py
   downstream_blocks: []
   executor_config: null
   executor_type: local_python
   has_callback: false
   language: python
-  name: taxi_to_gcs_partition_parquet
+  name: taxi_to_gcs_parquet
   retry_config: null
   status: executed
   timeout: null
   type: data_exporter
   upstream_blocks:
-  - clean_no_passenger_or_no_trip
-  uuid: taxi_to_gcs_partition_parquet
+  - load_green_taxi_parquet
+  uuid: taxi_to_gcs_parquet
 cache_block_output_in_memory: false
 callbacks: []
 concurrency_config: {}
 conditionals: []
-created_at: '2024-01-24 16:09:59.652610+00:00'
+created_at: '2024-01-28 18:58:37.210390+00:00'
 data_integration: null
 description: null
 executor_config: {}
 executor_count: 1
 executor_type: null
 extensions: {}
-name: blue sky
+name: green_taxi_to_gs
 notification_config: {}
 remote_variables_dir: null
 retry_config: {}
@@ -75,7 +54,7 @@ settings:
 spark_config: {}
 tags: []
 type: python
-updated_at: '2024-01-28 18:58:11'
-uuid: green_taxi_etl
+updated_at: '2024-01-28 19:37:58'
+uuid: green_taxi_to_gs
 variables_dir: /home/src/mage_data/magic-zoomcamp
 widgets: []
