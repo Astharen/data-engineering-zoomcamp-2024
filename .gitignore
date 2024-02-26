@@ -4,6 +4,11 @@
 *.ipynb_checkpoints
 *.json
 **/__pycache__
+zones/
+data/
+lib/
+tmp/
+
 
 **/.env
 **/.venv
