@@ -10,15 +10,15 @@ from pyspark.sql import functions as F
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument('--input_green', required=True)
-parser.add_argument('--input_yellow', required=True)
-parser.add_argument('--output', required=True)
+parser.add_argument('--input_green', required=False)
+parser.add_argument('--input_yellow', required=False)
+parser.add_argument('--output', required=False)
 
 args = parser.parse_args()
 
-input_green = args.input_green
-input_yellow = args.input_yellow
-output = args.output
+input_green = args.input_green if args.input_green is not None else 'data/pq/green/*/*'
+input_yellow = args.input_yellow if args.input_yellow is not None else 'data/pq/yellow/*/*'
+output = args.output if args.output is not None else 'data/report/revenue' 
 
 
 spark = SparkSession.builder \
